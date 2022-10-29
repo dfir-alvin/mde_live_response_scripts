@@ -10,7 +10,7 @@
     -directory
     name of directory to zip
 .USAGE
-    zip_directory.ps1 directory "C:\Windows\Temp\Test"
+    zip_directory.ps1 -directory "C:\Windows\Temp\Test"
 .VERSION
     1.0
 #>
