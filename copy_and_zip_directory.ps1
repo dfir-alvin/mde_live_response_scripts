@@ -32,15 +32,15 @@ $copy_directory = "C:\Windows\Temp\"
 # Copy directory to Temp directory
 function copy_to_temp{
 
-    Copy-Item -Path $formatted_directory_name -Destination $copy_directory -Force
+    Copy-Item -Path $formatted_directory_name -Destination $copy_directory -Recurse -Force
 }
 
 # Zip directory into new file
 function create_zipped_file {
 
     # Zipping variables
-    $input_directory = $formatted_directory_name
-    $zipped_file = $copy_directory+(Get-Date -f _yyyy.MM.dd-HH.mm.ss.K | ForEach-Object { $_ -replace ":", "." })+".zip"
+    $input_directory = $copy_directory+(Split-Path -Path $formatted_directory_name -Leaf)
+    $zipped_file = $copy_directory+(Split-Path -Path $formatted_directory_name -Leaf)+(Get-Date -f _yyyy.MM.dd-HH.mm.ss.K | ForEach-Object { $_ -replace ":", "." })+".zip"
 
     #Compress directory process
     Compress-Archive -Path $input_directory -DestinationPath $zipped_file -CompressionLevel Fastest
