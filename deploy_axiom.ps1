@@ -40,10 +40,10 @@ if ($get_agent_status -eq $null) {
     create_axiom_agent;
     deploy_axiom_agent;
 }
-elseif ($service.Status -ne "Running") {
+elseif ($get_agent_status.Status -ne "Running") {
     Write-Output "Starting Axiom Agent Service"
     Start-Service -Name AxAgent
 }
-elseif ($service.Status -eq "Running") {
+elseif ($get_agent_status.Status -eq "Running") {
     Write-Output "Axiom Agent seems to already be running, please check "
 }
