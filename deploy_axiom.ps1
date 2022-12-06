@@ -11,7 +11,8 @@
 .USAGE
     deploy_axiom.ps1
 .VERSION
-    1.0
+    1.1 Corrected service check and returned output. 
+    1.0 Initial Release
 #>
 
 $get_agent_status=(Get-Service -Name "AxAgent")
@@ -31,8 +32,8 @@ function deploy_axiom_agent{
     cmd.exe /c C:\Windows\Temp\AxAgent.exe
 
     ## Print file information
-    Write-Host "Axiom Agent should be deployed now, check status below for verification"
-    $get_agent_status
+    Write-Host "Axiom Agent should be deployed now, check the information below for verification."
+    Write-Output $get_agent_status
 }
 
 # Main execution code to check the status of Axiom Agent and deploy Axiom Agent
@@ -41,9 +42,12 @@ if ($get_agent_status -eq $null) {
     deploy_axiom_agent;
 }
 elseif ($get_agent_status.Status -ne "Running") {
-    Write-Output "Starting Axiom Agent Service"
+    Write-Host "Starting Axiom Agent Service"
     Start-Service -Name AxAgent
+    Write-Host "Axiom Agent should be deployed now, check the information below for verification."
+    Write-Output $get_agent_status
 }
 elseif ($get_agent_status.Status -eq "Running") {
-    Write-Output "Axiom Agent seems to already be running, please check "
+    Write-Host "Axiom Agent seems to already be running, please verify if host is already in Axiom Process."
+    Write-Output $get_agent_status
 }
